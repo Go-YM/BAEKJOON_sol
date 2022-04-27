@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+int main(void)
+{
+	int arr[9] = {0,};
+	int temp;
+	int sum = 0;
+	int over;
+	int x,y;
+	
+	for(int i=0;i<9;i++)
+	{
+		scanf("%d",&arr[i]);
+		sum += arr[i];
+	}
+	
+	over = sum-100;
+	
+	for(int a=0;a<9;a++)
+	{
+		for(int b=0;b<9;b++)
+		{
+			if((arr[a]+arr[b])==over)
+			{
+				x = a;
+				y = b;
+				break;
+			}
+		}
+	}
+	
+	arr[x] = 100;
+	arr[y] = 100;
+	
+	for(int a=0;a<8;a++)
+	{
+		for(int b=a+1;b<9;b++)
+		{
+			if(arr[a]>arr[b])
+			{
+				temp = arr[a];
+				arr[a] = arr[b];
+				arr[b]=temp;
+			}
+		}
+	}
+	
+	for(int k = 0; k<7;k++)
+	{
+		printf("%d\n",arr[k]);
+	}
+	
+	return 0;
+}
