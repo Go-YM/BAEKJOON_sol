@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+int main(void)
+{
+	int num;
+
+	scanf("%d",&num);
+
+	int count = 0;
+	int sol = num;
+	int anw = num;
+
+	do
+	{
+		if(sol == 0)
+		{
+			count++;
+			break;
+		}
+
+		else 
+		{
+			anw = (sol%10)+(sol/10);
+			sol = (sol%10)*10+(anw%10);
+		}
+
+		count++;
+	} 
+	while (sol != num);
+
+	printf("%d",count);
+
+	return 0;
+}
