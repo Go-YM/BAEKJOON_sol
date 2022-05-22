@@ -1,0 +1,51 @@
+//자료구조 1차 코테 2번 답안
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+	int key;
+	struct Node* link;
+}Node;
+
+int main(void)
+{
+	Node* head = (Node*)malloc(sizeof(Node));
+
+	int count=1;
+
+	int n;
+	scanf("%d",&n);
+		Node** node = (Node**)malloc(sizeof(Node*)*n);
+
+	for(int i=0;i<n;i++)
+	{
+		node[i] = (Node*)malloc(sizeof(Node));
+	}
+
+	for(int j=0;j<n;j++)
+	{
+		node[j]->key = count;
+		count++;
+	}
+
+	for(int k=0;k<n-1;k++)
+	{
+		node[k]->link = node[k+1];
+	}
+
+	node[n-1]->link = NULL;
+
+	for(int i=0;i<n;i++)
+	{
+		printf("%d ",node[i]->key);
+	}
+
+	for(int i=0;i<n;i++)
+	{
+		free(node[i]);
+	}
+
+	free(node);
+
+	return 0;
+}
