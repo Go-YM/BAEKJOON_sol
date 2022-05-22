@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	int a,b;
+	int count=1;
+	scanf("%d%d",&a,&b);
+
+	int **arr = (int**)malloc(sizeof(int*)*a);
+
+	for(int i=0;i<a;i++)
+	{
+		arr[i] = (int*)malloc(sizeof(int)*b);
+	}
+
+	for(int i=0;i<a;i++)
+	{
+		for(int j=0;j<b;j++)
+		{
+			arr[i][j] = count;
+			count++;
+		}
+	}
+
+	for(int i=0;i<a;i++)
+	{
+		for(int j=0;j<b;j++)
+		{
+			printf("%d ",arr[i][j]);
+		}
+		printf("\n");
+	}
+
+	for(int i=0;i<a;i++)
+	{
+		free(arr[i]);
+	}
+
+	free(arr);
+
+	return 0;
+}
