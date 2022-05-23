@@ -15,7 +15,7 @@ int main(void)
 
 	int n;
 	scanf("%d",&n);
-		Node** node = (Node**)malloc(sizeof(Node*)*n);
+	Node** node = (Node**)malloc(sizeof(Node*)*n);
 
 	for(int i=0;i<n;i++)
 	{
@@ -34,10 +34,13 @@ int main(void)
 	}
 
 	node[n-1]->link = NULL;
+	
+	Node *temp =node[0];
 
 	for(int i=0;i<n;i++)
 	{
-		printf("%d ",node[i]->key);
+		printf("%d ",temp->key);
+		temp = temp->link;
 	}
 
 	for(int i=0;i<n;i++)
