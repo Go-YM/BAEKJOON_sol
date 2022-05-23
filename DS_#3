@@ -1,0 +1,91 @@
+//자료구조 2차 코딩테스트 대비 이진트리 만들기
+//사용자로부터 n입력받은후 1부터 n까지의 자연수들을 이진포화트리로 구현하는 프로그램
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+	int key;
+	struct Node* left;
+	struct Node* right;
+}Node;
+
+int main(void)
+{
+	int n;
+	scanf("%d",&n);
+
+	Node** treeList = (Node**)malloc(sizeof(Node*)*n);
+
+	Node* head = NULL;
+
+	head->key = -9999;
+	head->left = NULL;
+	head->right = NULL;
+
+	for(int i=0;i<n;i++)
+	{
+		treeList[i] = (Node*)malloc(sizeof(Node));
+	}
+
+	//tree 연결하는 for 문
+	for(int j=0;j<n;j++)
+	{
+		treeList[j]->key = j+1;
+		treeList[j]->left = NULL;
+		treeList[j]->right = NULL;
+
+		//treeList의 Root-Node가 비어있을때
+		if(head->left == NULL)
+		{
+			head->left = treeList[j];
+			continue;
+		}
+		
+		//treeList의 Root-Node가 비어있지 않을때
+		Node* temp = treeList[0];
+
+		while(temp != NULL)
+		{
+			if((treeList[j]->key == 2*(temp->key)))
+			{
+				temp->left = treeList[j];
+				break;
+			}
+
+			else if(treeList[j]->key == 2*(temp->key)+1)
+			{
+				temp->right = treeList[j];
+				break;
+			}
+
+			else if(treeList[j]->key < 2*(temp->right->key))
+			{
+				temp = temp->left;
+				continue;
+			}
+
+			else
+			{
+				temp = temp->right;
+				continue;
+			}
+		}
+	}
+
+	for(int i=0;i<n;i++)
+	{
+		printf("%d",treeList[i]->key);
+	}
+
+	printf("%d",treeList[0]->left->key);
+	printf("%d",treeList[0]->left->right->key);
+
+	for(int k=0;k<n;k++)
+	{
+		free(treeList[k]);
+	}
+
+	free(treeList);
+
+	return 0;
+}
