@@ -16,7 +16,7 @@ int main(void)
 	headNode->key = -9999;
 	headNode->link = NULL; 
 
-	//연결리스트 
+	//연결리스트 생성
 	for(int i=0;i<n;i++)
 	{
 		Node* newNode = (Node*)malloc(sizeof(Node));
