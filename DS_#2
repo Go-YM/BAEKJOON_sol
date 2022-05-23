@@ -10,44 +10,54 @@ typedef struct Node{
 int main(void)
 {
 	int n;
-	int count = 1;
 	scanf("%d",&n);
 
-	Node** List = (Node**)malloc(sizeof(Node*)*n);
+	Node* headNode =(Node*)malloc(sizeof(Node));
+	headNode->key = -9999;
+	headNode->link = NULL; 
 
+	//연결리스트 
 	for(int i=0;i<n;i++)
 	{
-		List[i] = (Node*)malloc(sizeof(Node));
-	}
+		Node* newNode = (Node*)malloc(sizeof(Node));
+		newNode->key = i+1;
+		newNode->link = NULL;
+		Node* temp = headNode->link;
 
-	for(int j=0;j<n;j++)
-	{
-		List[j]->key = count++;
-		if(j == n-1)
+		if(temp == NULL)
 		{
-			List[j]->link = NULL;
+			headNode->link = newNode;
 		}
-		List[j]->link = List[j+1];
-	}
 
-	Node* temp = List[0];
-
-	for(int k=0;k<n;k++)
-	{
-		printf("%d ",temp->key);
-		if(List[k]->link==NULL)
+		else
 		{
-			break;
+			while(temp->link != NULL)
+			{
+				temp = temp->link;
+			}
+
+			temp->link = newNode;
 		}
-		temp = temp->link;
 	}
 
-	for(int l = 0;l<n;l++)
+	Node* curr = headNode->link;
+	Node* next = NULL;
+
+	//연결리스트 출력
+	while(curr != NULL)
 	{
-		free(List[l]);
+		printf("%d ",curr->key);
+		curr = curr->link;
 	}
 
-	free(List);
+	//연결리스트 free
+	curr = headNode->link;
+	while(curr!=NULL)
+	{
+		next = curr;
+		curr = curr->link;
+		free(next);
+	}
 
 	return 0;
 }
