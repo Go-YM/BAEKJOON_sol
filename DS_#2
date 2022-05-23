@@ -9,46 +9,45 @@ typedef struct Node{
 
 int main(void)
 {
-	Node* head = (Node*)malloc(sizeof(Node));
-
-	int count=1;
-
 	int n;
+	int count = 1;
 	scanf("%d",&n);
-	Node** node = (Node**)malloc(sizeof(Node*)*n);
+
+	Node** List = (Node**)malloc(sizeof(Node*)*n);
 
 	for(int i=0;i<n;i++)
 	{
-		node[i] = (Node*)malloc(sizeof(Node));
+		List[i] = (Node*)malloc(sizeof(Node));
 	}
 
 	for(int j=0;j<n;j++)
 	{
-		node[j]->key = count;
-		count++;
+		List[j]->key = count++;
+		if(j == n-1)
+		{
+			List[j]->link = NULL;
+		}
+		List[j]->link = List[j+1];
 	}
 
-	for(int k=0;k<n-1;k++)
-	{
-		node[k]->link = node[k+1];
-	}
+	Node* temp = List[0];
 
-	node[n-1]->link = NULL;
-	
-	Node *temp =node[0];
-
-	for(int i=0;i<n;i++)
+	for(int k=0;k<n;k++)
 	{
 		printf("%d ",temp->key);
+		if(List[k]->link==NULL)
+		{
+			break;
+		}
 		temp = temp->link;
 	}
 
-	for(int i=0;i<n;i++)
+	for(int l = 0;l<n;l++)
 	{
-		free(node[i]);
+		free(List[l]);
 	}
 
-	free(node);
+	free(List);
 
 	return 0;
 }
