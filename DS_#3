@@ -5,87 +5,95 @@
 
 typedef struct Node{
 	int key;
-	struct Node* left;
-	struct Node* right;
+	struct Node* llink;
+	struct Node* rlink;
 }Node;
+
+#define MAX 30
+Node* Queue[MAX];
+int rear = -1;
+int front = -1;
+
+Node* deQueue()
+{
+	front = (front+1)%MAX;
+	return Queue[front];
+}
+
+void enQueue(Node* ptr)
+{
+	rear = (rear+1)%MAX;
+	Queue[rear] = ptr;
+}
+
+void order(Node* ptr)
+{
+	if(ptr)
+	{
+		order(ptr->llink);
+		printf("%d ",ptr->key);
+		order(ptr->rlink);
+	}
+}
+
+void freeNode(Node* ptr)
+{
+	freeNode(ptr->llink);
+	freeNode(ptr->rlink);
+	free(ptr);
+}
 
 int main(void)
 {
+	Node* headNode = (Node*)malloc(sizeof(Node));
+	headNode->key = -9999;
+	headNode->rlink = NULL;
+	headNode->llink = NULL;
+
 	int n;
 	scanf("%d",&n);
 
-	Node** treeList = (Node**)malloc(sizeof(Node*)*n);
-
-	Node* head = NULL;
-
-	head->key = -9999;
-	head->left = NULL;
-	head->right = NULL;
-
 	for(int i=0;i<n;i++)
 	{
-		treeList[i] = (Node*)malloc(sizeof(Node));
-	}
+		Node* newNode = (Node*)malloc(sizeof(Node));
+		newNode->key = i+1;
+		newNode->llink = NULL;
+		newNode->rlink = NULL;
 
-	//tree 연결하는 for 문
-	for(int j=0;j<n;j++)
-	{
-		treeList[j]->key = j+1;
-		treeList[j]->left = NULL;
-		treeList[j]->right = NULL;
+		Node* temp = headNode->llink;
 
-		//treeList의 Root-Node가 비어있을때
-		if(head->left == NULL)
+		if(temp==NULL)
 		{
-			head->left = treeList[j];
-			continue;
+			headNode->llink = newNode;
+			temp = newNode;
 		}
-		
-		//treeList의 Root-Node가 비어있지 않을때
-		Node* temp = treeList[0];
-
-		while(temp != NULL)
+		else
 		{
-			if((treeList[j]->key == 2*(temp->key)))
+			if(temp->llink == NULL)
 			{
-				temp->left = treeList[j];
-				break;
+				temp->llink = newNode;
+				enQueue(newNode);
 			}
 
-			else if(treeList[j]->key == 2*(temp->key)+1)
+			else if((temp->llink!=NULL)&&(temp->rlink==NULL))
 			{
-				temp->right = treeList[j];
-				break;
-			}
-
-			else if(treeList[j]->key < 2*(temp->right->key))
-			{
-				temp = temp->left;
-				continue;
+				temp->rlink = newNode;
+				enQueue(newNode);
 			}
 
 			else
 			{
-				temp = temp->right;
-				continue;
+				temp = deQueue();
+				temp->llink = newNode;
+				enQueue(newNode);
 			}
 		}
 	}
 
-	for(int i=0;i<n;i++)
-	{
-		printf("%d",treeList[i]->key);
-	}
+	order(headNode->llink);
 
-	printf("%d",treeList[0]->left->key);
-	printf("%d",treeList[0]->left->right->key);
-
-	for(int k=0;k<n;k++)
-	{
-		free(treeList[k]);
-	}
-
-	free(treeList);
+	freeNode(headNode->llink);
+	free(headNode);
 
 	return 0;
 }
