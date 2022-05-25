@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	int n;
+	scanf("%d",&n);
+	int key;
+	int count=0;
+
+	int* arr = (int*)malloc(sizeof(int)*n);
+
+	for(int i=0;i<n;i++)
+	{
+		scanf("%d",&arr[i]);
+	}
+
+	for(int a=0;a<n-1;a++)
+	{
+		for(int b=a+1;b<n;b++)
+		{
+			if(arr[a]>arr[b])
+			{
+				int temp = arr[a];
+				arr[a] = arr[b];
+				arr[b] = temp;
+			}
+		}
+	}
+
+	int mainNum;
+	scanf("%d",&mainNum);
+
+	for(int j=0;j<n;j++)
+	{
+		if(mainNum<arr[j])
+		{
+			key = j;
+			break;
+		}
+	}
+
+	for(int x=mainNum;x>arr[key-1];x--)
+	{
+		for(int y=mainNum;y<arr[key];y++)
+		{
+			if(x==y)
+			{
+				continue;
+			}
+
+			count++;
+		}
+	}
+
+	printf("%d",count);
+
+	free(arr);
+
+	return 0;
+}
