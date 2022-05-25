@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+	int *a = (int*)malloc(sizeof(int)*num);
+	int *b = (int*)malloc(sizeof(int)*num);
+	int *MaxDiv = (int*)malloc(sizeof(int)*num);
+
+	for(int i=0;i<num;i++)
+	{
+		scanf("%d%d",&a[i],&b[i]);
+
+		MaxDiv[i] = 1;
+
+		for(int j=2;j<=((a[i]<b[i])?a[i]:b[i]);j++)
+		{
+			if((a[i]%j==0)&&(b[i]%j==0))
+			{
+				MaxDiv[i] = j;
+			}
+		}
+	}
+	
+	for(int k=0;k<num;k++)
+	{
+		printf("%d\n",a[k]*b[k]/MaxDiv[k]);
+	}
+
+	free(a);
+	free(b);
+	free(MaxDiv);
+
+	return 0;
+}
