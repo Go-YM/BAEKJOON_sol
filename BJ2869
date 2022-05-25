@@ -1,0 +1,35 @@
+//제한시간 확인하고
+//제한시간 짧을시 반복문 없이 푸는 연습 해보자
+#include <stdio.h>
+
+int main(void)
+{
+	int up,down,length;
+	int day;
+
+	scanf("%d%d%d",&up,&down,&length);
+
+	int dis = up-down;
+	int soon = length-up;
+
+	if(up == length)
+	{
+		printf("%d",1);
+		return 0;
+	}
+
+	if(soon % dis)
+	{
+		day = (soon/dis)+1;
+	}
+
+	else
+	{
+		day = soon/dis;
+	}
+
+
+	printf("%d",day+1);
+
+	return 0;
+}
