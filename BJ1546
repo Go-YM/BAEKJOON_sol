@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	float* score = (float*)malloc(sizeof(float)*(num));
+
+	int Max=0;
+	float Sum=0;
+
+	for(int i=0;i<num;i++)
+	{
+		scanf("%f",&score[i]);
+	}
+
+	for(int j=0;j<num;j++)
+	{
+		if(Max<score[j])
+		{
+			Max = score[j];
+		}
+	}
+
+	for(int k=0;k<num;k++)
+	{
+		score[k] = score[k]/Max*100;
+		Sum += score[k];
+	}
+
+	printf("%f",Sum/num);
+
+	free(score);
+
+	return 0;
+}
