@@ -1,0 +1,28 @@
+//값이 1일때 예외처리
+//값이 서로 같을때도 포함
+#include <stdio.h>
+
+int main(void)
+{
+	int a,b;
+	scanf("%d%d",&a,&b);
+
+	int MaxDiv,MinMul;
+
+	int min = (a<b)?a:b;
+
+	MaxDiv = 1;
+
+	for(int i=2;i<=min;i++)
+	{
+		if((a%i==0)&&(b%i==0))
+		{
+			MaxDiv = i;
+		}
+	}
+
+	MinMul = a*b/MaxDiv;
+	printf("%d\n%d",MaxDiv,MinMul);
+
+	return 0;
+}
