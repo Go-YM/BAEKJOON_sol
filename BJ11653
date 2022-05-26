@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	while(num!=1)
+	{
+		int i=2;
+
+		while(num%i!=0)
+		{
+			i++;
+			continue;
+		}
+
+		printf("%d\n",i);
+		num /=i;
+	}
+
+	return 0;
+}
