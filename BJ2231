@@ -25,7 +25,7 @@ int main(void)
 		{
 			temp = i;
 			check = 1;
-			break;
+			break; //어차피 적은수부터 for문이니까 끝까지 할 필요 x
 		}
 	}
 
