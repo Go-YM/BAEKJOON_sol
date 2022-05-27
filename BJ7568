@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	//0 -> 몸무게 1 -> 키 2-> 순위
+	int big[50][3];
+
+	int same=0;
+
+	for(int i=0;i<num;i++)
+	{
+		scanf("%d%d",&big[i][0],&big[i][1]);
+		big[i][2] = 1;
+	}
+	//자기보다 큰사람이 있는 수만큼 순위를 하락시킴
+	for(int i=0;i<num;i++)
+	{
+		for(int j=0;j<num;j++)
+		{
+			if(big[i][0] < big[j][0] && big[i][1] < big [j][1])
+			{
+				big[i][2]++;
+			}
+		}
+	}
+
+	for(int k=0;k<num;k++)
+	{
+		printf("%d ",big[k][2]);
+	}
+
+
+	return 0;
+}
