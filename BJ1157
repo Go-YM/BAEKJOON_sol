@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+	char c[1000001];
+	scanf("%s",c);
+
+	int length = strlen(c);
+	int alpha[26]={0,};
+
+	for(int i=0;i<length+1;i++)
+	{
+		if((c[i]>='A')&&(c[i]<='Z'))
+		{
+			alpha[c[i]-65]++;
+		}
+
+		else
+		{
+			alpha[c[i]-97]++;
+		}
+	}
+
+	int max=alpha[0];
+	int maxindex = 0;
+	int count = 0;
+
+	for(int i=1;i<26;i++)
+	{
+		if(max<alpha[i])
+		{
+			max = alpha[i];
+			maxindex = i;
+			count = 0;
+		}
+
+		else if(max==alpha[i])
+		{
+			count++;
+		}
+	}
+
+
+	if(count == 0)
+	{
+		printf("%c\n",65+maxindex);
+	}
+
+	else
+	{
+		printf("?\n");
+	}
+
+	return 0;
+}
