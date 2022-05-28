@@ -1,0 +1,66 @@
+//int와 long이 2의 31승 까지
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100000
+
+typedef struct stack{
+	int top;
+	int data[MAX];
+}stack;
+
+void push(stack *s,int key)
+{
+	s->data[s->top++] = key; 
+}
+
+int pop(stack *s)
+{
+	if(s->top == 0)
+	{
+		return 0;
+	}
+	s->top--;
+	return s->data[s->top];
+}
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+	int sum=0;
+
+	stack s;
+	s.top = 0;
+
+	int* arr = (int*)malloc(sizeof(int)*num);
+
+	for(int i=0;i<num;i++)
+	{
+		scanf("%d",&arr[i]);
+	}
+
+	for(int j=0;j<num;j++)
+	{
+		if(arr[j]==0)
+		{
+			pop(&s);
+		}
+
+		else
+		{
+			push(&s,arr[j]);
+		}
+	}
+
+	for(int k=0;k<num;k++)
+	{
+		int temp = pop(&s);
+		sum += temp;
+	}
+
+	printf("%d",sum);
+
+	free(arr);
+
+	return 0;
+}
