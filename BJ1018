@@ -1,0 +1,77 @@
+#include <stdio.h>
+
+int main(void)
+{
+	int a,b;
+	scanf("%d%d",&a,&b);
+
+	char chess[50][51];
+	int min = 64;
+	int count;
+
+	for(int i=0;i<a;i++)
+	{
+		scanf("%s",chess[i]);
+	}
+
+	for(int i=0;i<a-7;i++)
+	{
+		for(int j=0;j<b-7;j++)
+		{
+			count = 0;
+
+			//index 합의 짝수가 흰색일때(홀수는 검은색)
+			if(((i+j)%2==0&&chess[i][j]=='W')||((i+j)%2==1&&chess[i][j]=='B'))
+			{
+				for(int x=0;x<8;x++)
+				{
+					for(int y=0;y<8;y++)
+					{
+                        //index합이 짝수고 흰색일때 count++
+						if((x+i+y+j)%2==0&&chess[x+i][y+j]=='W')
+						{
+							count++;
+						}
+                        //index 합이 홀수고 검은색일때 count++
+						else if((x+i+y+j)%2==1&&chess[x+i][y+j]=='B')
+						{
+							count++;
+						}
+					}
+				}
+			}
+
+			//index 합의 짝수가 검은색일때(홀수는 흰색)
+			else if(((i+j)%2==0&&chess[i][j]=='B')||((i+j)%2==1&&chess[i][j]=='W'))
+			{
+				for(int x=0;x<8;x++)
+				{
+					for(int y=0;y<8;y++)
+					{
+                        //index 합이 짝수고 검은색일때 count++
+						if((x+i+y+j)%2==0&&chess[x+i][y+j]=='B')
+						{
+							count++;
+						}
+                        //index 합이 홀수고 흰색일때 count++
+						else if((x+i+y+j)%2==1&&chess[x+i][y+j]=='W')
+						{
+							count++;
+						}
+					}
+				}
+			}
+
+			//체스판 전체 64칸이므로 64-count와 count중 작은 값 선택
+			count = (count<64-count)?count:64-count;
+			if(min>count)
+			{
+				min = count;
+			}
+		}
+	}
+
+	printf("%d",min);
+
+	return 0;
+}
