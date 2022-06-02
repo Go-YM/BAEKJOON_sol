@@ -4,7 +4,7 @@ int main(void)
 {
 	int num;
 
-	scanf("%d",&num);
+	scanf("%d", &num);
 
 	int count = 0;
 	int sol = num;
@@ -20,7 +20,7 @@ int main(void)
 
 		else 
 		{
-			anw = (sol%10)+(sol/10);
+			anw = (sol%10) + (sol/10);
 			sol = (sol%10)*10+(anw%10);
 		}
 
