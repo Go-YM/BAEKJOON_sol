@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node
+{
+	char data;
+	struct Node* left;
+	struct Node* right;
+}Node;
+
+Node* search(Node* node,char key)
+{
+	if(node!=NULL)
+	{
+		if(node->data == key)
+		{
+			return node;
+		}
+
+		else
+		{
+			Node* temp = search(node->left,key);
+			if(temp!=NULL)
+			{
+				return temp;
+			}
+			return search(node->right,key);
+		}
+	}
+	return NULL;
+}
+
+void insert(Node* root,char parent,char left,char right)
+{
+	Node* leftChild = (Node*)malloc(sizeof(Node));
+	Node* rightChild = (Node*)malloc(sizeof(Node));
+
+	Node* temp = NULL;
+
+	temp = search(root,parent);
+
+	if(left!='.')
+	{
+		temp->left=leftChild;
+		leftChild->data = left;
+		leftChild->left=NULL;
+		leftChild->right=NULL;
+	}
+
+	if(right!='.')
+	{
+		temp->right=rightChild;
+		rightChild->data = right;
+		rightChild->left=NULL;
+		rightChild->right=NULL;
+	}
+}
+
+void preorder(Node* ptr)
+{
+	if(ptr)
+	{
+		printf("%c",ptr->data);
+		preorder(ptr->left);
+		preorder(ptr->right);
+	}
+}
+
+void inorder(Node* ptr)
+{
+	if(ptr)
+	{
+		inorder(ptr->left);
+		printf("%c",ptr->data);
+		inorder(ptr->right);
+	}
+}
+
+void postorder(Node* ptr)
+{
+	if(ptr)
+	{
+		postorder(ptr->left);
+		postorder(ptr->right);
+		printf("%c",ptr->data);		
+	}
+}
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+	char parentC,leftC,rightC;
+	Node* rootNode = (Node*)malloc(sizeof(Node));
+	rootNode->left=NULL;
+	rootNode->right=NULL;
+	Node* lchild = (Node*)malloc(sizeof(Node));
+	Node* rchild = (Node*)malloc(sizeof(Node));
+
+	for(int i=0;i<num;i++)
+	{
+		scanf(" %c %c %c",&parentC,&leftC,&rightC);
+
+		if(i==0)
+		{
+			rootNode->data = parentC;
+			if(leftC!='.')
+			{
+				rootNode->left=lchild;
+				lchild->data = leftC;
+				lchild->left=NULL;
+				lchild->right=NULL;
+			}
+
+			if(rightC!='.')
+			{
+				rootNode->right=rchild;
+				rchild->data = rightC;
+				rchild->left=NULL;
+				rchild->right=NULL;
+			}
+		}
+
+		else
+		{
+			insert(rootNode,parentC,leftC,rightC);
+		}
+	}
+	preorder(rootNode);
+	printf("\n");
+	inorder(rootNode);
+	printf("\n");
+	postorder(rootNode);
+	
+	
+	return 0;
+}
