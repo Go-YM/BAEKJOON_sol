@@ -1,0 +1,73 @@
+//자료구조 3차 코테 준비 Double-linked-list
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+	int key;
+	struct Node* llink;
+	struct Node* rlink;
+}Node;
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	Node* headNode = (Node*)malloc(sizeof(Node));
+	headNode->key = -999;
+	headNode->llink=NULL;
+	headNode->rlink=NULL;
+
+	for(int i=0;i<num;i++)
+	{
+		Node * newNode = (Node*)malloc(sizeof(Node));
+		newNode->key = i+1;
+		newNode->llink=NULL;
+		newNode->rlink=NULL;
+
+		Node* temp = headNode->llink;
+		if(temp == NULL)
+		{
+			headNode->llink = newNode;
+			newNode->rlink = headNode;
+		}
+
+		else
+		{
+			while(temp->llink!=NULL)
+			{
+				temp = temp->llink;
+			}
+			temp->llink = newNode;
+			newNode->rlink = temp;
+		}
+	}
+
+	Node* curr = headNode->llink;
+	Node* next = NULL;
+
+	while(curr!=NULL)
+	{
+		next = curr;
+		printf("%d ",curr->key);
+		curr = curr->llink;
+	}
+
+	printf("\n");
+	curr = next;
+
+	while(curr!=headNode)
+	{
+		printf("%d ",curr->key);
+		curr = curr->rlink;
+	}
+
+	while(curr!=NULL)
+	{
+		next = curr;
+		curr = curr->llink;
+		free(next);
+	}
+
+	return 0;
+}
