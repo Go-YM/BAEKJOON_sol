@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+	int key;
+	struct Node* link;
+}Node;
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	Node* headnode = (Node*)malloc(sizeof(Node));
+	headnode->key = -999;
+	headnode->link=NULL;
+
+	for(int i=0;i<num;i++)
+	{
+		Node* newNode = (Node*)malloc(sizeof(Node));
+		newNode->key = i+1;
+		newNode->link = NULL;
+
+		Node* temp = headnode->link;
+
+		if(temp==NULL)
+		{
+			headnode->link = newNode;
+		}
+
+		else
+		{
+			while(temp->link != NULL)
+			{
+				temp = temp->link;
+			}
+
+			temp->link = newNode;
+		}
+	}
+
+	Node* curr = headnode->link;
+	Node* next = curr->link;
+	Node* prev = NULL;
+
+	while(next!=NULL)
+	{
+		prev = curr;
+
+		if(curr==headnode->link)
+		{
+			prev->link = NULL;
+		}
+
+		curr = next;
+		next = curr->link;
+		curr->link = prev;
+	}
+
+	headnode->link = curr;
+
+	curr = headnode->link;
+
+	while(curr!=NULL)
+	{
+		printf("%d ",curr->key);
+		curr = curr->link;
+	}
+
+	curr = headnode->link;
+	next = NULL;
+
+	while(curr!=NULL)
+	{
+		next = curr;
+		curr = curr->link;
+		free(next);
+	}
+
+	return 0;
+}
