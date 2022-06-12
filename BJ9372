@@ -1,0 +1,27 @@
+// 비행경로는 항상 연결그래프 >> 어디서 출발하는지 안주어짐
+// 경로만 잘 선택하면 최소의 경우가 항상 가능함
+// 그래프의 간선의 개수 -1 이 최소값
+#include <stdio.h>
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	int country,airplane;
+
+	while(num--)
+	{
+		scanf("%d%d",&country,&airplane);
+
+		for(int i=0;i<airplane;i++)
+		{
+			int air1,air2;
+			scanf("%d%d",&air1,&air2);
+		}
+
+		printf("%d\n",country-1);
+	}
+
+	return 0;
+}
