@@ -1,0 +1,118 @@
+//포화이진트리 문제 
+//사용자가 num입력하면 1부터 num까지 노드를 만들어 최대한 포화트리가 되게 구성
+//전위,중위,후위 탐색
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node
+{
+	int data;
+	struct Node* left;
+	struct Node* right;
+}Node;
+
+Node* search(Node* node,int key)
+{
+	if(node)
+	{
+		if(node->data == key)
+		{
+			return node;
+		}
+
+		else
+		{
+			Node* temp = search(node->left,key);
+			if(temp!=NULL)
+			{
+				return temp;
+			}
+			return search(node->right,key);
+		}
+	}
+	return NULL;
+}
+
+void insert(Node* root,int key)
+{
+	Node* newNode = (Node*)malloc(sizeof(Node));
+	newNode->data = key;
+	newNode->left = NULL;
+	newNode->right = NULL;
+
+	Node* temp = NULL;
+
+	//자료형이 int형인걸 활용 부모노드는 자식 노드의 1/2배라는 것으로 비교
+	temp = search(root,key/2); //결과가 부모노드
+
+	if(temp->left==NULL)
+	{
+		temp->left = newNode;
+	}
+
+	else if (temp->right == NULL)
+	{
+		temp->right = newNode;
+	}
+}
+
+void preorder(Node* ptr)
+{
+	if(ptr)
+	{
+		printf("%d ",ptr->data);
+		preorder(ptr->left);
+		preorder(ptr->right);
+	}
+}
+
+void inorder(Node* ptr)
+{
+	if(ptr)
+	{
+		inorder(ptr->left);
+		printf("%d ",ptr->data);
+		inorder(ptr->right);
+	}
+}
+
+void postorder(Node* ptr)
+{
+	if(ptr)
+	{
+		postorder(ptr->left);
+		postorder(ptr->right);
+		printf("%d ",ptr->data);		
+	}
+}
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	Node* rootNode = (Node*)malloc(sizeof(Node));
+	rootNode->left = NULL;
+	rootNode->right = NULL;
+
+	for(int i=1;i<num+1;i++)
+	{
+		if(i==1)
+		{
+			rootNode->data = i;
+		}
+
+		else
+		{
+			insert(rootNode,i);
+		}
+	}
+	preorder(rootNode);
+	printf("\n");
+	inorder(rootNode);
+	printf("\n");
+	postorder(rootNode);
+	
+	
+	return 0;
+}
