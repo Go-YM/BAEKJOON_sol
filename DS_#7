@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+    int key;
+    struct Node* left;
+    struct Node* right;
+}Node;
+
+Node* searchNode(Node* ptr,int key)
+{
+    if(ptr)
+    {
+        if(ptr->key>key)
+        {
+            if(ptr->left==NULL)
+            {
+                return ptr;
+            }
+
+            else
+            {
+                searchNode(ptr->left,key);
+            }
+        }
+
+        else
+        {
+            if(ptr->right==NULL)
+            {
+                return ptr;
+            }
+
+            else
+            {
+                searchNode(ptr->right,key);
+            }
+        }
+    }
+}
+
+void insert(Node* n,int key)
+{
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->key = key;
+    newNode->left = NULL;
+    newNode->right = NULL;
+
+    Node* temp = searchNode(n,key);
+    if(temp->key>key)
+    {
+        temp->left = newNode;
+    }
+
+    else
+    {
+        temp->right = newNode;
+    }
+}
+
+void preorder(Node *n)
+{
+    if(n)
+    {
+        printf("%d ",n->key);
+        preorder(n->left);
+        preorder(n->right);
+    }
+}
+
+void delete(Node *n)
+{
+    if(n)
+    {
+        delete(n->left);
+        delete(n->right);
+        free(n);
+    }
+}
+
+Node* LLrotation(Node *n)
+{
+    Node* x = n->left;
+    Node* y = x->right;
+    x->right = n;
+    n->left = y;
+
+    return x;
+}
+
+Node* RRrotation(Node *n)
+{
+    Node* x = n->right;
+    Node* y = x->left;
+    x->left = n;
+    n->right = y;
+
+    return x;
+}
+
+Node* RLrotation(Node *n)
+{
+    Node* x = n->right;
+    Node* y = x->left;
+    Node* z = y->right;
+
+    n->right = y;
+    y->right = x;
+    x->left = z;
+    return RRrotation(n);
+}
+
+Node* LRrotation(Node *n)
+{
+    Node* x = n->left;
+    Node* y = x->right;
+    Node* z = y->left;
+
+    n->left = y;
+    y->left = x;
+    x->right = z;
+    return LLrotation(n);
+}
+
+int main(void)
+{
+    Node* rootNode = (Node*)malloc(sizeof(Node));
+    rootNode->key = 5;
+    rootNode->left = NULL;
+    rootNode->right = NULL;
+
+    insert(rootNode,3);
+    insert(rootNode,4);
+
+    preorder(rootNode);
+    printf("\n");
+    rootNode = LRrotation(rootNode);
+    preorder(rootNode);
+    printf("\n");
+    
+
+    delete(rootNode);
+    return 0;
+}
