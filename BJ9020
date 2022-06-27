@@ -38,6 +38,7 @@ int main(void)
 			a++;
 			b--;
 		}
+		//a는 2로 나눈 값에서 더하기 떄문에 b부터 출력하면 됨
 		if(a>b)
 		{
 			int temp=a;
