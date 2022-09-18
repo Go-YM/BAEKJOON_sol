@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    int nNum,qNum,vNum;
+    scanf("%d%d%d",&nNum,&qNum,&vNum);
+
+    int *arr;
+    arr = (int*)malloc(sizeof(int)*nNum);
+
+    for(int i=0;i<nNum;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+
+    for(int j=0;j<qNum;j++)
+    {
+        int question;
+        scanf("%d",&question);
+
+        if(nNum==vNum)
+        {
+            if(question>nNum)
+            {
+                printf("%d\n",arr[nNum-1]);
+            }
+
+            else
+            {
+                printf("%d\n",arr[question]);
+            }
+        }
+
+        else
+        {
+            if(question>=nNum)
+            {
+                question = question%(nNum-vNum+1);
+
+                if(question<vNum-1)
+                {
+                    question += (nNum-vNum+1);
+                }
+            }
+
+            printf("%d\n",arr[question]);
+        }
+    }
+
+    free(arr);
+
+    return 0;
+}
