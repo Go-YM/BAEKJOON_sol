@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int sumarr[100001];
+
+int main(void)
+{
+    int arrNum,queNum;
+    scanf("%d%d",&arrNum,&queNum);
+    int item;
+    int sum = 0;
+
+    for(int i=0;i<arrNum;i++)
+    {
+        scanf("%d",&item);
+        sum += item;
+        sumarr[i] = sum;
+    }
+
+    int x,y;
+
+    for(int j=0;j<queNum;j++)
+    {
+        scanf("%d%d",&x,&y);
+        if(x==1)
+        {
+            printf("%d\n",sumarr[y-1]);
+        }
+        else
+        {
+            printf("%d\n",sumarr[y-1]-sumarr[x-2]);
+        }
+    }
+
+    return 0;
+}
