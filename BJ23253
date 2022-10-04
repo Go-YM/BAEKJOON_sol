@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int arr[200000]={0,};
+
+int main(void)
+{
+  int check;
+  int bookNum,groupNum;
+  scanf("%d%d",&bookNum,&groupNum);
+
+  int bookGroup;
+
+  for(int i=0;i<groupNum;i++)
+  {
+    check = 0;
+
+    scanf("%d",&bookGroup);
+
+    for(int j=0;j<bookGroup;j++)
+    {
+      scanf("%d",&arr[j]);
+    }
+
+    for(int x=0;x<bookGroup-1;x++)
+    {
+      if(arr[x]<arr[x+1])
+      {
+        check = 1;
+      }
+    }
+
+    if(check == 1)
+    {
+      break;
+    }
+  }
+
+  if(check==1)
+  {
+    printf("No\n");
+  }
+
+  else
+  {
+    printf("Yes\n");
+  }
+
+  return 0;
+}
