@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int arr[10001]={0,};
+
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	int temp;
+
+	for(int i=0;i<num;i++)
+	{
+		scanf("%d",&temp);
+		arr[temp]++;
+	}
+
+	for(int j=1;j<=10000;j++)
+	{
+		while(arr[j]>0)
+		{
+			printf("%d\n",j);
+			arr[j]--;
+		}
+	}
+
+	return 0;
+}
