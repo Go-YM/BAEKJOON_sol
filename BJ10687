@@ -1,0 +1,56 @@
+//10867
+//제한시간 : 1초
+//제한 메모리 : 256MB
+//input 최대 100,000 (2중 for문시 error)
+//input) -1000<= input <=1000
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//int arr[100000];
+
+int main(void)
+{
+    int num;
+    scanf("%d",&num);
+
+    int numArr[2001] = {0,};
+
+    int *arr = (int*)malloc(sizeof(int)*num);
+
+    for(int i=0;i<num;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+
+    for(int j=0;j<num;j++)
+    {
+        //0부터 1000까지 (총 1001개)
+        if(arr[j]>=0)
+        {
+            if(numArr[arr[j]+1000]==0)
+            {
+                numArr[arr[j]+1000]=1;
+            }
+        }
+
+        //-1000부터 -1까지 (총 1000개)
+        else
+        {
+            if(numArr[arr[j]+1000]==0)
+            {
+                numArr[arr[j]+1000]=1;
+            }
+        }
+    }
+
+    for(int k=0;k<2001;k++)
+    {
+        if(numArr[k]==1)
+        {
+            printf("%d ",k-1000);
+        }
+    }
+
+    return 0;
+}
