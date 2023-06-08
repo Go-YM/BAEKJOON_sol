@@ -1,0 +1,156 @@
+// 2023-1 자료구조(prof.노서영) 코딩테스트 예상 문제
+// 이원 탐색트리 생성 및 할당 해제
+#include <stdio.h>
+#include <stdlib.h>
+
+//이원 탐색 트리를 위한 노드 구조체
+typedef struct Node{
+	int key;
+	struct Node* lchild; //왼쪽 자식 노드 가리킴
+	struct Node* rchild; //오른쪽 자식 노드 가리킴
+}Node;
+
+void inorder(Node* n);
+void preorder(Node* n);
+void postorder(Node* n);
+
+//메인함수
+int main(void)
+{
+	int num;
+	scanf("%d",&num);
+
+	//노드의 key값을 입력받을 변수
+	int key;
+
+	//트리의 rootNode를 가리킬 headNode선언
+	Node* headNode = (Node*)malloc(sizeof(Node));
+	headNode->key = -999;
+	headNode->lchild = NULL;
+	headNode->rchild = NULL;
+
+	for(int i=0;i<num;i++)
+	{
+		scanf("%d",&key);
+
+		//트리를 구성하는 노드를 만들기 위한 newNode
+		Node* newNode = (Node*)malloc(sizeof(Node));
+		newNode->key = key;
+		newNode->lchild = NULL;
+		newNode->rchild = NULL;
+		
+		//rootNode 설정
+		if( i==0 )
+		{
+			headNode->lchild = newNode;
+		}
+
+		//newNode 설정 (탐색후 추가)
+		else
+		{
+			Node* temp = headNode->lchild;
+
+			while(1)
+			{
+				if(temp->key>newNode->key)
+				{
+					if(temp->lchild==NULL)
+					{
+						temp->lchild = newNode;
+						break;
+					}
+
+					else
+					{
+						temp = temp->lchild;
+					}
+				}
+
+				else
+				{
+					if(temp->rchild==NULL)
+					{
+						temp->rchild = newNode;
+						break;
+					}
+
+					else
+					{
+						temp = temp->rchild;
+					}
+				}
+			}
+		}
+	}
+
+	//출력
+	printf("inorder : ");
+	inorder(headNode->lchild);
+	printf("\n");
+	printf("preorder : ");
+	preorder(headNode->lchild);
+	printf("\n");
+	printf("postorder : ");
+	postorder(headNode->lchild);
+	printf("\n");
+
+	Node* curr = headNode;
+
+	Node* queue[10];
+	int front, back = 0;
+	queue[back++] = curr;
+	
+	//할당해제 (BFS)
+	while(num--)
+	{
+		if(front != 0)
+		{
+			curr = queue[front];
+		}
+
+		if(curr->lchild !=NULL)
+		{
+			queue[back++] = curr->lchild;
+		}
+
+		else if(curr->rchild != NULL)
+		{
+			queue[back++] = curr->rchild;
+		}
+
+		free(curr);
+		front++;
+	}
+
+	return 0;
+}
+
+void inorder(Node* n)
+{
+	if(n)
+	{
+		inorder(n->lchild);
+		printf("%d ",n->key);
+		inorder(n->rchild);
+	}
+}
+
+void preorder(Node* n)
+{
+	if(n)
+	{
+		printf("%d ",n->key);
+		preorder(n->lchild);
+		preorder(n->rchild);
+	}
+}
+
+void postorder(Node* n)
+{
+	if(n)
+	{
+		postorder(n->lchild);
+		postorder(n->rchild);
+		printf("%d ",n->key);
+	}
+}
